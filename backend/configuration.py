@@ -1,10 +1,15 @@
 from backend.dao import Dao
+from backend.service import Service
 import configparser
 
 class AbstractFactory:
     @classmethod
     def create_dao(cls, config):
         raise NotImplementedError("create_dao method not implemented")
+    
+    @classmethod
+    def create_service(cls, dao):
+        raise NotImplementedError("create_service method not implemented")
 
 
 class ConcreteFactory(AbstractFactory):
@@ -16,6 +21,10 @@ class ConcreteFactory(AbstractFactory):
             password=config['DATABASE']['password'],
             database=config['DATABASE']['database'],
         )
+        
+    @classmethod
+    def create_service(cls, dao):
+        return Service(dao)
 
 def read_config(file_path):
     config = configparser.ConfigParser()
@@ -27,4 +36,5 @@ def initialize_system(config_path="/Users/ojaswichopra/Downloads/Projects/Sparkl
     factory = ConcreteFactory()
 
     dao = factory.create_dao(config)
-    return dao
+    service = factory.create_service(dao)
+    return dao, service
