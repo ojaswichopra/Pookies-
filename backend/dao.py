@@ -48,3 +48,23 @@ class Dao:
         query = "SELECT * FROM USER;"
         results = self.execute_query(query)
         return results
+    
+    def get_orders(self,status,uid):
+        if status=='All':
+            query = f"SELECT * FROM OrderHistory WHERE UserID={uid};"
+        else:
+            query = f"SELECT * FROM OrderHistory WHERE UserID={uid} AND OrderStatus={status};"
+        results = self.execute_query(query)
+        return results
+    
+    def get_order_items(self,orderID):
+        query = f"SELECT * FROM OrderItems WHERE OrderID={orderID};"
+        results = self.execute_query(query)
+        return results
+    
+    def get_product_from_order(self,productID):
+        query = f"SELECT * FROM Product WHERE ProductID={productID};"
+        results = self.execute_query(query)
+        return results
+    
+        
