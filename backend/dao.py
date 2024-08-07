@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import datetime
 
 class Dao:
     '''This class definition, Dao, is a data access object for the Walmart database. 
@@ -67,4 +68,16 @@ class Dao:
         results = self.execute_query(query)
         return results
     
+    def get_faqs(self,category):
+        query = f"SELECT * FROM FAQs WHERE Category={category};"
+        results = self.execute_query(query)
+        return results
+
+    def raise_tickets(self,uid,desc):
+        now = datetime.now()
+        now = now.strftime('%Y-%m-%d %H:%M:%S')
+        query = f"INSERT INTO CustomerSupportTickets (UserID, IssueDescription, Status, CreatedDate) VALUES ({uid}, {desc}, 'In Progress', {now});"
+        self.execute_query(query)
+        
+        
         

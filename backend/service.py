@@ -13,3 +13,11 @@ class Service:
     
     def get_product_from_order(self,productID):
         return self.dao.get_product_from_order(productID)
+    
+    def get_faqs(self,category):
+        return self.dao.get_faqs(category)
+    
+    def raise_tickets(self,uid,desc):
+        return self.dao.raise_tickets(self,uid,desc)
+    
+
